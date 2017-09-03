@@ -4,8 +4,8 @@
 # cannot be restored. This project is to write a remove and restore to provide users with a
 # recycle bin which can be used to safely delete and restore files.
 #
-# @name remove.sh # FIX ME
-# @usage sh remove.sh fileName
+# @name remove
+# @usage sh remove fileName
 # @author nalam
 # @date 2017-09-03
 #
@@ -16,7 +16,7 @@
 # directory.
 
 FILE="$1"
-RM="remove.sh" # FIX ME
+RM="remove"
 
 E_INVALID=1
 E_VALID=0
@@ -41,7 +41,9 @@ if [[ -f "$FILE" ]]; then
     # 6
     echo "$DELETEDFILE:$PWD/$FILE" >> $HOME/.restore.info
 
-    mv $HOME/deleted/$DELETEDFILE $HOME/project/$FILE
+    # uncomment the file below for dev purpose
+    # mv $HOME/deleted/$DELETEDFILE $HOME/project/$FILE
+    exit $E_VALID
 elif [[ $# -eq 0 ]]; then
     echo "usage: sh remove fileName"
     exit $E_INVALID
