@@ -14,7 +14,7 @@ directory.
    exist, your script should create it.
 3. The file to be deleted should be a command line argument and the script executed
    as follows
-   *sh remove fileName**
+   **sh remove fileName**
 4. The script should test for the following error conditions and display the same error
    messages as the rm command.
    - File does not exist, display error message if file supplied does not exist
@@ -35,7 +35,7 @@ directory.
    If another file named f1, with an inode of 5432, was removed from the /home/trainee1/testing
    directory, then .restore.info would contain:
    
-   >f1_1234:/home/trainee1/f1
+   >f1_1234:/home/trainee1/f1  
    >f1_5432:/home/trainee1/testing/f1
 
 7. Test the file being deleted is not remove. If it is display an error message 
