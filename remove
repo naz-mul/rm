@@ -15,42 +15,43 @@
 # the file your script should move it to a recycle bin directory called deleted in your home
 # directory.
 
-FILE="$1"
+FILE=$1
 RM="remove"
 
 E_INVALID=1
 E_VALID=0
 
-if [[ -f "$FILE" ]]; then
-    if [ "$FILE" == "$RM" ]; then
+if [ -f "$FILE" ]; then
+    if [ "$FILE" = "$RM" ]; then
         # 7
         echo "Attempting to delete remove - operation aborted"
         exit $E_INVALID
     fi
     
     # 2
-    mkdir -p $HOME/deleted
+    mkdir -p "$HOME/deleted"
     
     # 5
-    inode=`ls -i $FILE | awk '{print $1}'`
-    FILENAME=$(basename $1)
+    inode=$(ls -i "$FILE" | awk '{print $1}')
+    FILENAME=$(basename "$1")
     DELETEDFILE="$FILENAME"
     DELETEDFILE+="_$inode"    
-    mv $FILE $HOME/deleted/$DELETEDFILE
+    mv "$FILE" "$HOME/deleted/$DELETEDFILE"
 
     # 6
-    echo "$DELETEDFILE:$PWD/$FILE" >> $HOME/.restore.info
+    echo "$DELETEDFILE:$PWD/$FILE" >> "$HOME/.restore.info"
 
     # uncomment the file below for dev purpose
+    # this will restore the deleted file back to the original location
     # mv $HOME/deleted/$DELETEDFILE $HOME/project/$FILE
     exit $E_VALID
-elif [[ $# -eq 0 ]]; then
+elif [ $# -eq 0 ]; then
     echo "usage: sh remove fileName"
     exit $E_INVALID
-elif [[ -d "$FILE" ]]; then
+elif [ -d "$FILE" ]; then
     echo "remove: $FILE is a directory"
     exit $E_INVALID
-elif [[ ! -f "$FILE" ]]; then
+elif [ ! -f "$FILE" ]; then
     echo "remove: $FILE: No such file or directory"
     exit $E_INVALID
 fi

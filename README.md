@@ -4,7 +4,7 @@ cannot be restored. This project is to write a remove and restore to provide use
 recycle bin which can be used to safely delete and restore files.
 
 ## Phase 1 - Basic Functionality
-Write a script called remove that mimics the rm command - remove shold be able to
+Write a script called remove that mimics the rm command - remove should be able to
 accept the name of a file as a command line argument as rm does, but instead of deleting
 the file your script should move it to a recycle bin directory called deleted in your home
 directory.
@@ -13,7 +13,7 @@ directory.
 2. The recycle bin should be $HOME/deleted. If the deleted directory does not already
    exist, your script should create it.
 3. The file to be deleted should be a command line argument and the script executed
-   as follows
+   as follows:  
    **sh remove fileName**
 4. The script should test for the following error conditions and display the same error
    messages as the rm command.
@@ -27,7 +27,7 @@ directory.
    This gets around the potential problem of deleting 2 files with the same name.
    The recycle bin will only contain files, not directories with files.
 6. Create a hidden file called .restore.info in $HOME. Each line of this file should contain
-   the name of the file in the recyle bin, followed by a colon, followed by the original full path of the filename. For example, if a file called f1, with an inode of 1234 was removed
+   the name of the file in the recycle bin, followed by a colon, followed by the original full path of the filename. For example, if a file called f1, with an inode of 1234 was removed
    from the /home/trainee1 directory, this file would contain:
    
    >f1_1234:/home/trainee1/f1
@@ -39,5 +39,5 @@ directory.
    >f1_5432:/home/trainee1/testing/f1
 
 7. Test the file being deleted is not remove. If it is display an error message 
-   "Attempting to delete - operation aborted" and terminate teh script with an exit status.
+   "Attempting to delete - operation aborted" and terminate the script with an exit status.
    (Tip - copy remove before testing this works).
