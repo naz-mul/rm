@@ -36,7 +36,7 @@ if [[ -f "$FILE" ]]; then
     FILENAME=$(basename $1)
     DELETEDFILE="$FILENAME"
     DELETEDFILE+="_$inode"    
-    # mv $FILE $HOME/deleted/$DELETEDFILE
+    mv $FILE $HOME/deleted/$DELETEDFILE
 
     # 6
     echo "$DELETEDFILE:$PWD/$FILE" >> $HOME/.restore.info
