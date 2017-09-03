@@ -14,7 +14,7 @@ directory.
    exist, your script should create it.
 3. The file to be deleted should be a command line argument and the script executed
    as follows
-   *sh remove fileName*
+   *sh remove fileName**
 4. The script should test for the following error conditions and display the same error
    messages as the rm command.
    - File does not exist, display error message if file supplied does not exist
