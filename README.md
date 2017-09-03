@@ -29,11 +29,15 @@ directory.
 6. Create a hidden file called .restore.info in $HOME. Each line of this file should contain
    the name of the file in the recyle bin, followed by a colon, followed by the original full path of the filename. For example, if a file called f1, with an inode of 1234 was removed
    from the /home/trainee1 directory, this file would contain:
-   f1_1234:/home/trainee1/f1
+   
+   >f1_1234:/home/trainee1/f1
+   
    If another file named f1, with an inode of 5432, was removed from the /home/trainee1/testing
    directory, then .restore.info would contain:
-   f1_1234:/home/trainee1/f1
-   f1_5432:/home/trainee1/testing/f1
+   
+   >f1_1234:/home/trainee1/f1
+   >f1_5432:/home/trainee1/testing/f1
+
 7. Test the file being deleted is not remove. If it is display an error message 
    "Attempting to delete - operation aborted" and terminate teh script with an exit status.
    (Tip - copy remove before testing this works).
