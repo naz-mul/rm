@@ -48,7 +48,7 @@ elif [[ $# -eq 0 ]]; then
 elif [[ -d "$FILE" ]]; then
     echo "remove: $FILE is a directory"
     exit $E_INVALID
-else
+elif [[ ! -f "$FILE" ]]; then
     echo "remove: $FILE: No such file or directory"
     exit $E_INVALID
 fi
