@@ -1,0 +1,44 @@
+#!/bin/sh
+#
+# @name restore
+# @usage sh restore fileName
+# @author nalam
+# @date 2017-09-03
+#
+# Phase 2 - Basic Restore
+# Write a script called restore to restore individual files back to their original location.
+# The user will determine which file will be restored and use the filename with inode number
+# in order to restore the file. For example: sh restore f1_1234
+
+FILE=$1
+
+if [ -f "$FILE" ]; then
+    FILENAME=$(basename "$1")
+    ABS_RESTORE_PATH=$(grep "$FILENAME" "$HOME"/.restore.info | cut -d ":" -f2)
+    
+    if [ ! -f "$ABS_RESTORE_PATH" ]; then
+        # 3
+        mv "$FILE" "$ABS_RESTORE_PATH"
+        # 6
+        sed -in-place "/$FILENAME/d" "$HOME/.restore.info"
+    else
+        # 5
+        read -p "Do you want to overwrite? y/n : " yn
+        case $yn in
+            yes|Y|y ) 
+                # 3
+                mv "$FILE" "$ABS_RESTORE_PATH"
+                # 6
+                sed -in-place "/$FILENAME/d" "$HOME/.restore.info"
+                echo 'in this case'
+                ;;
+            * ) exit;;
+        esac
+    fi
+elif [ $# -eq 0 ]; then
+    echo "usage: sh remove fileName" # 4
+elif [ -d "$FILE" ]; then
+    echo "remove: $FILE is a directory"
+elif [ ! -f "$FILE" ]; then
+    echo "remove: $FILE: No such file or directory" # 4
+fi
