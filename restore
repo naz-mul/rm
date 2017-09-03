@@ -14,7 +14,7 @@ FILE=$1
 
 if [ -f "$FILE" ]; then
     FILENAME=$(basename "$1")
-    ABS_RESTORE_PATH=$(grep "$FILENAME" "$HOME"/.restore.info | cut -d ":" -f2)
+    ABS_RESTORE_PATH=$(grep "$FILENAME" "$HOME/.restore.info" | cut -d ":" -f2)
     
     if [ ! -f "$ABS_RESTORE_PATH" ]; then
         # 3
@@ -30,7 +30,6 @@ if [ -f "$FILE" ]; then
                 mv "$FILE" "$ABS_RESTORE_PATH"
                 # 6
                 sed -in-place "/$FILENAME/d" "$HOME/.restore.info"
-                echo 'in this case'
                 ;;
             * ) exit;;
         esac
