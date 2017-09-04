@@ -1,0 +1,127 @@
+#!/bin/bash
+#
+# @name remove
+# @usage sh remove fileName
+# @author nalam
+# @date 2017-09-04
+#
+# Phase 3 - Multiple files, Wildcards and Option Flags
+# The real rm can remove multiple files (i.e. rm file1 file2 filen), and use wildcards (e.g. rm f*).
+# The real rm can use the -i flag (for interactive), and -v flag (for verbose).
+# Add this functionality to your remove.
+
+args_count=$#
+args_values=("$@")
+
+mkdir -p "$HOME/deleted"
+
+
+function usage {
+   cat << EOF
+usage: sh remove [-i | -v] [-iv] file ...
+
+unlink file
+EOF
+   exit 1
+}
+
+function is_file {
+    if [ -f "$1" ]; then
+        return 1
+    else
+        echo "remove: $1: No such file or directory"
+        return 0
+    fi
+}
+
+function is_remove {
+    if [ is_file $1 ]; then 
+        if [ "$1" = "remove" ]; then
+            echo "Attempting to delete remove - operation aborted"
+            return 1
+        fi
+    fi
+}
+
+function is_dir {
+    if [ -d "$1" ]; then
+        echo "remove: $FILE is a directory"
+        return 1
+    else
+        return 0
+    fi
+}
+
+function remove_file {
+    if [ is_remove $1 ] && [ ! is_dir $1 ]; then
+        inode=$(ls -i "$1" | awk '{print $1}')
+        FILENAME=$(basename "$1")
+        DELETEDFILE="$FILENAME"
+        DELETEDFILE+="_$inode"    
+        mv "$1" "$HOME/deleted/$DELETEDFILE"
+
+        echo "$DELETEDFILE:$PWD/$FILE" >> "$HOME/.restore.info"
+    fi
+}
+
+function interactive {
+    # interactive handling
+    read -p "remove $1? " yn
+    case $yn in
+        [Yy]* ) 
+            echo "delete"
+            if [ ${args_values[0]} != "-iv" ]; then
+                remove_file $1
+            fi
+            ;;
+        [nN]* ) 
+            echo "don't delete"
+            ;;
+    esac
+}
+
+function verbose {
+    # verbose handling
+    if [ ${args_values[0]} != "-iv" ]; then
+        remove_file $1
+    fi
+    echo "$1"
+}
+
+function remove {
+    if [ $args_count -lt 0 ]; then
+        usage
+    else
+        case ${args_values[0]} in
+            -i )
+                file_count=1
+                while [ $file_count -lt $args_count ]
+                do
+                    interactive ${args_values[$file_count]}
+                    file_count=$(expr $file_count + 1)  
+                done
+                ;;
+            -v )
+                file_count=1
+                while [ $file_count -lt $args_count ]
+                do
+                    verbose ${args_values[$file_count]}
+                    file_count=$(expr $file_count + 1)  
+                done 
+                ;; 
+            -iv )
+                file_count=1
+                while [ $file_count -lt $args_count ]
+                do
+                    interactive ${args_values[$file_count]}
+                    remove_file ${args_values[$file_count]}
+                    verbose ${args_values[$file_count]}
+                    file_count=$(expr $file_count + 1)  
+                done
+                ;;
+        esac
+    fi
+}
+
+remove
+

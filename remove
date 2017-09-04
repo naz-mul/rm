@@ -33,7 +33,7 @@ if [ -f "$FILE" ]; then
     
     # 5
     inode=$(ls -i "$FILE" | awk '{print $1}')
-    FILENAME=$(basename "$1")
+    FILENAME=$(basename "$FILE")
     DELETEDFILE="$FILENAME"
     DELETEDFILE+="_$inode"    
     mv "$FILE" "$HOME/deleted/$DELETEDFILE"
@@ -41,7 +41,7 @@ if [ -f "$FILE" ]; then
     # 6
     echo "$DELETEDFILE:$PWD/$FILE" >> "$HOME/.restore.info"
 
-    # uncomment the file below for dev purpose
+    # uncomment the line below for dev purpose
     # this will restore the deleted file back to the original location
     # mv $HOME/deleted/$DELETEDFILE $HOME/project/$FILE
     exit $E_VALID

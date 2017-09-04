@@ -13,7 +13,7 @@
 FILE=$1
 
 if [ -f "$FILE" ]; then
-    FILENAME=$(basename "$1")
+    FILENAME=$(basename "$FILE")
     ABS_RESTORE_PATH=$(grep "$FILENAME" "$HOME/.restore.info" | cut -d ":" -f2)
     
     if [ ! -f "$ABS_RESTORE_PATH" ]; then
