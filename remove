@@ -34,8 +34,8 @@ if [ -f "$FILE" ]; then
     # 5
     inode=$(ls -i "$FILE" | awk '{print $1}')
     FILENAME=$(basename "$FILE")
-    DELETEDFILE="$FILENAME"
-    DELETEDFILE+="_$inode"    
+    DELETEDFILE="${FILENAME}_${inode}"
+
     mv "$FILE" "$HOME/deleted/$DELETEDFILE"
 
     # 6
